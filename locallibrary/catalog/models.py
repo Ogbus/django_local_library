@@ -25,13 +25,13 @@ class Genre(models.Model):
         constraints = [
             UniqueConstraint(
                 Lower('name'),
-                name='genre_name_case_insensitive_unique',
+                 name='genre_name_case_insensitive_unique',
                 violation_error_message='genre already exists (case insensitive match)'
             )
         ]
 
 class Language(models.Model):
-    name = models.CharField(max_length=100, unique=True, help_text='enter the book\'s original languae')
+    name = models.CharField(max_length=100, unique=True, help_text="enter the book's original languae")
 
     def __str__(self):
         return self.name
@@ -40,12 +40,12 @@ class Language(models.Model):
         return reverse('language-detail', args=[str(self.id)])
 
     class Meta:
-        contraints= [
+        constraints = [
             UniqueConstraint(
                 Lower('name'),
-                name='language_name_case_insensitive_unique',
-                violation_error_message='Language already exists (case insensitive match)'
-            ),
+                 name='language_name_case_insensitive_unique',
+                violation_error_message='genre already exists (case insensitive match)'
+            )
         ]
 
 class Book(models.Model):
