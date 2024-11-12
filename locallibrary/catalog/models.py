@@ -30,12 +30,31 @@ class Genre(models.Model):
             )
         ]
 
+class Language(models.Model):
+    name = models.CharField(max_length=100, unique=True, help_text='enter the book\'s original languae')
+
+    def __str__(self):
+        return self.name
+    
+    def get_absolute_url(self):
+        return reverse('language-detail', args=[str(self.id)])
+
+    class Meta:
+        contraints= [
+            UniqueConstraint(
+                Lower('name'),
+                name='language_name_case_insensitive_unique',
+                violation_error_message='Language already exists (case insensitive match)'
+            ),
+        ]
+
 class Book(models.Model):
     title = models.CharField(max_length=200)
     author = models.ForeignKey('Author', on_delete=models.RESTRICT, null=True)
     summary = models.TextField(max_length=1000, help_text='enter a brief description of the book')
     isbn = models.CharField('ISBN', max_length=13, unique=True, help_text='13 character <a href="https://www.isbn-international.org/content/what-isbn''">ISBN number</a>')
-    genre = models.ManyToManyField(Genre, help_text='slect a genre for this book')
+    genre = models.ManyToManyField(Genre, help_text='select a genre for this book')
+    language = models.ForeignKey('Language', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.title
