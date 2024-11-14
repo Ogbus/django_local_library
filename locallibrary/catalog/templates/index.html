@@ -16,4 +16,8 @@
         <li><strong>Hard in Books:</strong> {{ words_in_books }}</li>
         <li><strong>thriller in genre:</strong> {{ words_in_genre }}</li>
     </ul>
+
+    <p>
+        You have visited this page {{ num_visits }} time {{ num_visits|pluralize }}
+    </p>
 {% endblock %}

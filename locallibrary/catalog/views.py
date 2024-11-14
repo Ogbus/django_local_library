@@ -8,6 +8,12 @@ def index(request):
 
     # generate counts of some of the main objects
     num_books = Book.objects.all().count()
+
+    # Number of visit to this view is counted in the session
+    num_visits = request.session.get('num_visits', 0)
+    num_visits += 1
+    request.session['num_visits'] = num_visits
+
     num_instances = BookInstance.objects.all().count
 
     # available books (status = 'a)
@@ -31,6 +37,7 @@ def index(request):
         'words_in_books': words_in_books,
         'words_in_genre': words_in_genre,
         'page_title': page_title,
+        'num_visits': num_visits,
     }
 
     # render the html template index.html with the data in the context available
